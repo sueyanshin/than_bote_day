@@ -11,9 +11,11 @@ class CounterCubit extends Cubit<CounterState> {
   }
 
   void increment() {
-    count++;
-    _saveCounterToPrefs();
-    emit(CounterValue(value: count));
+    if (count < 99999) {
+      count++;
+      _saveCounterToPrefs();
+      emit(CounterValue(value: count));
+    }
   }
 
   void reset() {

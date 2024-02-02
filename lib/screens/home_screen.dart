@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:popover/popover.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:than_bote_day/cubit/dark_mode_cubit.dart';
 import 'package:than_bote_day/cubit/json_cubit.dart';
 import 'package:than_bote_day/cubit/toggle_cubit.dart';
 import 'package:than_bote_day/model/data_model.dart';
 import 'package:than_bote_day/screens/widgets/bottom_beads_sheet.dart';
 import 'package:than_bote_day/screens/widgets/page_content.dart';
+
+import 'widgets/fontsize_slider_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,7 +18,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double fontsize = 35;
+  final player = AudioPlayer();
+
+  // double fontSize = 1;
   @override
   Widget build(BuildContext context) {
     context.read<JsonCubit>().loadJsonData();
@@ -29,13 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(
-                    title: Slider(
-                      value: fontsize,
-                      onChanged: (value) {
-                        // fontsize++;
-                      },
+                  builder: (context) => const AlertDialog(
+                    title: Text(
+                      'စာလုံးအရွယ်အစားပြောင်းလဲမည်',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
+                    actions: [FontSizeSlider()],
                   ),
                 );
               },
@@ -61,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       : const Icon(Icons.dark_mode));
             },
           ),
-          // IconButton(onPressed: () {}, icon: const Icon(Icons.info_outline))
         ],
       ),
       body: Stack(
@@ -70,7 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BlocBuilder<JsonCubit, List<DataModel>>(
             builder: (context, state) {
               if (state.isEmpty) {
-                return Center(child: Text(state.toString()));
+                return const Center(
+                    child: Center(
+                  child: CircularProgressIndicator(),
+                ));
               } else {
                 return PageView.builder(
                   itemCount: state.length,
@@ -83,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             },
           ),
-          const BottomBeadsSheet()
+          BottomBeadsSheet()
         ],
       ),
     );

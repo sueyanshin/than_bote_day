@@ -8,11 +8,16 @@ import 'package:than_bote_day/model/data_model.dart';
 part 'json_state.dart';
 
 class JsonCubit extends Cubit<List<DataModel>> {
-  JsonCubit() : super([]);
+  JsonCubit() : super([]) {
+    loadJsonData();
+  }
 
   Future<void> loadJsonData() async {
     try {
-      String jsonString = await rootBundle.loadString('assets/data.json');
+      print("called");
+      String jsonString =
+          await rootBundle.loadString('assets/audios/data.json');
+      print("JSON loaded successfully");
 
       List<dynamic> jsonData = json.decode(jsonString);
 
@@ -22,7 +27,8 @@ class JsonCubit extends Cubit<List<DataModel>> {
       }).toList();
       emit(pageContents);
     } catch (e) {
-      emit([]);
+      // emit([]);
+      print('error ${e}');
     }
   }
 }

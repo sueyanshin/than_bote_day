@@ -18,7 +18,7 @@ class DarkModeCubit extends Cubit<DarkModeState> {
 
   Future<void> _loadModeFromPref() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isDarkMode = prefs.getBool('darkMode') ?? false;
+    isDarkMode = prefs.getBool('darkMode') ?? isDarkMode;
     emit(DarkModeState(isDarkMode: isDarkMode));
   }
 

@@ -1,11 +1,12 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:than_bote_day/cubit/counter_cubit.dart';
 
 class BottomBeadsSheet extends StatelessWidget {
-  const BottomBeadsSheet({
+  final player = AudioPlayer();
+  BottomBeadsSheet({
     Key? key,
   }) : super(key: key);
 
@@ -49,23 +50,19 @@ class BottomBeadsSheet extends StatelessWidget {
                       }
                     },
                   ),
-                  IconButton(
-                    // style: ButtonStyle(
-                    //     // overlayColor:
-                    //     //     MaterialStateProperty.all(Colors.green[900]),
-                    //     // elevation: MaterialStateProperty.all(0),
-                    //     backgroundColor:
-                    //         MaterialStateProperty.all(Colors.transparent)),
-                    // onLongPress: () {
-                    // _playJustAudio();
-                    // _incrementCounter();
-                    // },
-                    onPressed: () {
+                  GestureDetector(
+                    onLongPress: () {
+                      _playJustAudio();
                       context.read<CounterCubit>().increment();
                     },
-                    icon: const Icon(
-                      Icons.add_box,
-                      size: 100,
+                    child: IconButton(
+                      onPressed: () {
+                        context.read<CounterCubit>().increment();
+                      },
+                      icon: const Icon(
+                        Icons.add_box,
+                        size: 100,
+                      ),
                     ),
                   ),
                 ],
@@ -101,5 +98,10 @@ class BottomBeadsSheet extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _playJustAudio() async {
+    player.setAsset('../../../assets/audios/bonk.mp3');
+    await player.play();
   }
 }

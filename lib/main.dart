@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:than_bote_day/cubit/change_fontsize_cubit.dart';
 import 'package:than_bote_day/cubit/counter_cubit.dart';
 import 'package:than_bote_day/cubit/dark_mode_cubit.dart';
 import 'package:than_bote_day/cubit/json_cubit.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => JsonCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ChangeFontsizeCubit(),
         ),
       ],
       child: BlocBuilder<DarkModeCubit, DarkModeState>(
